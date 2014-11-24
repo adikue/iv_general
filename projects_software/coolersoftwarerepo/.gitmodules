@@ -1,0 +1,3 @@
+[submodule "3rdparty/django-chartit"]
+	path = 3rdparty/django-chartit
+	url = https://github.com/pgollakota/django-chartit.git

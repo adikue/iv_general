@@ -1,0 +1,8 @@
+#ignore all swap files
+*.swp
+
+#ignore pychache
+*__pycache__*
+
+#ignore database files
+*.sqlite3

@@ -1,0 +1,20 @@
+*********************************SETTING FOR TIMER***********************************************
+* README:
+* This file CANNOT contain empty lines.
+* Setting NAME and value are separated with space symbol ' '
+* Value can be only one of valid
+* Comments starts with asteriks symbol '*'
+* String length in this file should not exceed 256 symbols
+*
+* SCALE
+* This set scale factor of timer period. It can pe microseconds or miliseconds.
+* Values:
+* US = timer perion in microseconds (default)
+* MS = timer period in miliseconds
+SCALE US
+* PERIOD
+* This is the period of timer in 'SCALE' units
+* Values:
+* 0..65535 = Period of timer. Default(1)
+PERIOD 1
+*

@@ -1,0 +1,39 @@
+Field=Designator~String~Designator~100|Field=Value~String~Value~100|Field=Quantity~Integer~Quantity~100|ReportField=Currency~<none>|ReportField=ProductionQuantity~1|ReportField=ProjectFileName~GPS_TR+GSM.PrjPCB|ReportField=ProjectFullPath~E:\docs\gps&gsm\GPS_TR+GSM.PrjPCB|ReportField=Title~Bill of Materials For Project [GPS_TR+GSM.PrjPCB] (No PCB Document Selected)|ReportField=TotalQuantity~55|ReportField=ReportTime~12:05:47|ReportField=ReportDate~15.12.2012|ReportField=ReportDateTime~15.12.2012 12:05:47|ReportField=OutputName~Bill of Materials|ReportField=OutputType~BOM_PartType|ReportField=GeneratorName~BOM|ReportField=GeneratorDescription~Bill of Materials|ReportField=VariantName~None|ReportField=Address1~|ReportField=Address2~|ReportField=Address3~|ReportField=Address4~|ReportField=ApprovedBy~|ReportField=Author~|ReportField=CheckedBy~|ReportField=CompanyName~|ReportField=CurrentDate~15.12.2012|ReportField=CurrentTime~12:05:39|ReportField=Date~|ReportField=DocumentFullPathAndName~E:\docs\gps&gsm\GLOBAL.SchDoc|ReportField=DocumentName~GLOBAL.SchDoc|ReportField=DocumentNumber~|ReportField=DrawnBy~|ReportField=Engineer~|ReportField=ImagePath~|ReportField=ModifiedDate~19.10.2012|ReportField=Organization~|ReportField=ProjectName~GPS_TR+GSM.PrjPCB|ReportField=Revision~|ReportField=Rule~|ReportField=SheetNumber~|ReportField=SheetTotal~|ReportField=Time~|ReportField=Title~|ReportField=DataSourceFileName~GPS_TR+GSM.PrjPCB|ReportField=DataSourceFullPath~E:\docs\gps&gsm\GPS_TR+GSM.PrjPCB
+BT1||1
+C1, C13, C14|1uF|3
+C2, C3|22pF|2
+C4, C11|100nF|2
+C5, C7|33pF|2
+C6|10nF|1
+C8, C10|4.7pF|2
+C9|470pF|1
+C12, C20|10uF|2
+C15, C18|0.1uF|2
+C16|10uF|1
+C17|22uF|1
+C19|1uF|1
+J1||1
+P1||1
+P2||1
+P3||1
+P5||1
+P6||1
+P7||1
+P8||1
+P9||1
+Q1, Q2||2
+R1, R3, R6|62|3
+R2, R4, R7|360|3
+R5, R10, R14|1K|3
+R8, R9, R11|100K|3
+R12|4K7|1
+R13|430|1
+R15|91K|1
+R16|270K|1
+SIM1||1
+U1||1
+U2||1
+U3||1
+U4||1
+U5||1
+X1||1

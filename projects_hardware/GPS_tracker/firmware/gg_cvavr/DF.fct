@@ -1,0 +1,5 @@
+main DSTACK_USAGE:35 DSTACK_LEVEL:35 FILE:"gg_tracker.c" LINE:409
+lcd_putsf DSTACK_USAGE:3 DSTACK_LEVEL:38 FILE:"C:\cvavr2\lib\lcd.lib" LINE:217
+lcd_putchar DSTACK_USAGE:1 DSTACK_LEVEL:39 FILE:"C:\cvavr2\lib\lcd.lib" LINE:178
+lcd_gotoxy DSTACK_USAGE:2 DSTACK_LEVEL:41 FILE:"C:\cvavr2\lib\lcd.lib" LINE:158
+_lcd_write_data DSTACK_USAGE:1 DSTACK_LEVEL:42 FILE:"C:\cvavr2\lib\lcd.lib" LINE:77

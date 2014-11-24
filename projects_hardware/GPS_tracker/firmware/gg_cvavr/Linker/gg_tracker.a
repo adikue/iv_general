@@ -1,0 +1,800 @@
+;/*
+;* tracker.c
+;*
+;* Created: 29.10.2012 12:47:26
+;* Author: ivovk
+;*/
+;#define F_CPU 8000000
+;
+;#include <delay.h>
+;//#include <avr/interrupt.h>
+;#include <stdbool.h>
+;// Alphanumeric LCD Module functions
+;#asm
+;PCODE: $00000000 VOL: 0
+   .equ __lcd_port=0x1B ;PORTC
+;PCODE: $00000001 VOL: 0
+;PCODE: $00000002 VOL: 0
+; 0000 000F #endasm
+;#include <lcd.h>
+;#include <mega162.h>
+;PCODE: $00000003 VOL: 0
+	#ifndef __SLEEP_DEFINED__
+;PCODE: $00000004 VOL: 0
+	#define __SLEEP_DEFINED__
+;PCODE: $00000005 VOL: 0
+	.EQU __se_bit=0x20
+;PCODE: $00000006 VOL: 0
+	.SET power_ctrl_reg=mcucr
+;PCODE: $00000007 VOL: 0
+	#endif
+;PCODE: $00000008 VOL: 0
+;PCODE: $00000009 VOL: 0
+;#include <stdint.h>
+;#include <stdlib.h>
+;#include <stdio.h>
+;
+;#define E  		 	   	  		      2 // pin number in selected port
+;#define RS 		  	   	  		      0 // pin number in selected port
+;#define D7 		 	   	  		      7 // pin number in selected port
+;#define D6 		 	   	  		      6 // pin number in selected port
+;#define D5 		 	   	  		      5 // pin number in selected port
+;#define D4 	                          4 //
+;
+;char buffer[180];
+;
+;
+;
+;//===================================
+;//Hardware initialization and reset
+;//===================================
+;
+;/**
+;Procedure of hardware initialization of atmega controller
+;*/
+;void initialization(){
+; 0000 0028 void initialization(){
+
+	.CSEG
+;PCODE: $0000000A VOL: 0
+;PCODE: $0000000B VOL: 0
+; 0000 0029 #asm ("cli")
+;PCODE: $0000000C VOL: 0
+	cli
+;PCODE: $0000000D VOL: 0
+; 0000 002A // Crystal Oscillator division factor: 1
+; 0000 002B #pragma optsize-
+; 0000 002C CLKPR=0x80;
+;PCODE: $0000000E VOL: 0
+;PCODE: $0000000F VOL: 0
+; 0000 002D CLKPR=0x00;
+;PCODE: $00000010 VOL: 0
+;PCODE: $00000011 VOL: 0
+; 0000 002E #ifdef _OPTIMIZE_SIZE_
+; 0000 002F #pragma optsize+
+; 0000 0030 #endif
+; 0000 0031 
+; 0000 0032 // Input/Output Ports initialization
+; 0000 0033 // Port A initialization
+; 0000 0034 // Func7=In Func6=In Func5=In Func4=In Func3=In Func2=In Func1=In Func0=In
+; 0000 0035 // State7=T State6=T State5=T State4=T State3=T State2=T State1=T State0=T
+; 0000 0036 PORTA=0x00;
+;PCODE: $00000012 VOL: 0
+;PCODE: $00000013 VOL: 0
+; 0000 0037 DDRA = (1<<E)|(1<<RS)|(1<<D7)|(1<<D6)|(1<<D5)|(1<<D4);
+;PCODE: $00000014 VOL: 0
+;PCODE: $00000015 VOL: 0
+; 0000 0038 
+; 0000 0039 // Port B initialization
+; 0000 003A // Func7=In Func6=In Func5=In Func4=In Func3=In Func2=In Func1=In Func0=In
+; 0000 003B // State7=T State6=T State5=T State4=T State3=T State2=T State1=T State0=T
+; 0000 003C PORTB=0x00;
+;PCODE: $00000016 VOL: 0
+;PCODE: $00000017 VOL: 0
+; 0000 003D DDRB=0x00;
+;PCODE: $00000018 VOL: 0
+;PCODE: $00000019 VOL: 0
+; 0000 003E 
+; 0000 003F // Port C initialization
+; 0000 0040 // Func7=In Func6=In Func5=In Func4=In Func3=In Func2=In Func1=In Func0=In
+; 0000 0041 // State7=T State6=T State5=T State4=T State3=T State2=T State1=T State0=T
+; 0000 0042 PORTC=0x00;
+;PCODE: $0000001A VOL: 0
+;PCODE: $0000001B VOL: 0
+; 0000 0043 DDRC=0x00;
+;PCODE: $0000001C VOL: 0
+;PCODE: $0000001D VOL: 0
+; 0000 0044 
+; 0000 0045 // Port D initialization
+; 0000 0046 // Func7=In Func6=In Func5=In Func4=In Func3=In Func2=In Func1=In Func0=In
+; 0000 0047 // State7=T State6=T State5=T State4=T State3=T State2=T State1=T State0=T
+; 0000 0048 PORTD=0x00;
+;PCODE: $0000001E VOL: 0
+;PCODE: $0000001F VOL: 0
+; 0000 0049 DDRD=0x00;
+;PCODE: $00000020 VOL: 0
+;PCODE: $00000021 VOL: 0
+; 0000 004A 
+; 0000 004B // Port E initialization
+; 0000 004C // Func2=Out Func1=Out Func0=Out
+; 0000 004D // State2=0 State1=0 State0=0
+; 0000 004E PORTE=0x00;
+;PCODE: $00000022 VOL: 0
+;PCODE: $00000023 VOL: 0
+; 0000 004F DDRE=0x07;
+;PCODE: $00000024 VOL: 0
+;PCODE: $00000025 VOL: 0
+; 0000 0050 
+; 0000 0051 // Timer/Counter 0 initialization
+; 0000 0052 // Clock source: System Clock
+; 0000 0053 // Clock value: Timer 0 Stopped
+; 0000 0054 // Mode: Normal top=0xFF
+; 0000 0055 // OC0 output: Disconnected
+; 0000 0056 TCCR0=0x00;
+;PCODE: $00000026 VOL: 0
+;PCODE: $00000027 VOL: 0
+; 0000 0057 TCNT0=0x00;
+;PCODE: $00000028 VOL: 0
+;PCODE: $00000029 VOL: 0
+; 0000 0058 OCR0=0x00;
+;PCODE: $0000002A VOL: 0
+;PCODE: $0000002B VOL: 0
+; 0000 0059 
+; 0000 005A // Timer/Counter 1 initialization
+; 0000 005B // Clock source: System Clock
+; 0000 005C // Clock value: Timer1 Stopped
+; 0000 005D // Mode: Normal top=0xFFFF
+; 0000 005E // OC1A output: Discon.
+; 0000 005F // OC1B output: Discon.
+; 0000 0060 // Noise Canceler: Off
+; 0000 0061 // Input Capture on Falling Edge
+; 0000 0062 // Timer1 Overflow Interrupt: Off
+; 0000 0063 // Input Capture Interrupt: Off
+; 0000 0064 // Compare A Match Interrupt: Off
+; 0000 0065 // Compare B Match Interrupt: Off
+; 0000 0066 TCCR1A=0x00;
+;PCODE: $0000002C VOL: 0
+;PCODE: $0000002D VOL: 0
+; 0000 0067 TCCR1B=0x00;
+;PCODE: $0000002E VOL: 0
+;PCODE: $0000002F VOL: 0
+; 0000 0068 TCNT1H=0x00;
+;PCODE: $00000030 VOL: 0
+;PCODE: $00000031 VOL: 0
+; 0000 0069 TCNT1L=0x00;
+;PCODE: $00000032 VOL: 0
+;PCODE: $00000033 VOL: 0
+; 0000 006A ICR1H=0x00;
+;PCODE: $00000034 VOL: 0
+;PCODE: $00000035 VOL: 0
+; 0000 006B ICR1L=0x00;
+;PCODE: $00000036 VOL: 0
+;PCODE: $00000037 VOL: 0
+; 0000 006C OCR1AH=0x00;
+;PCODE: $00000038 VOL: 0
+;PCODE: $00000039 VOL: 0
+; 0000 006D OCR1AL=0x00;
+;PCODE: $0000003A VOL: 0
+;PCODE: $0000003B VOL: 0
+; 0000 006E OCR1BH=0x00;
+;PCODE: $0000003C VOL: 0
+;PCODE: $0000003D VOL: 0
+; 0000 006F OCR1BL=0x00;
+;PCODE: $0000003E VOL: 0
+;PCODE: $0000003F VOL: 0
+; 0000 0070 
+; 0000 0071 // Timer/Counter 2 initialization
+; 0000 0072 // Clock source: System Clock
+; 0000 0073 // Clock value: Timer2 Stopped
+; 0000 0074 // Mode: Normal top=0xFF
+; 0000 0075 // OC2 output: Disconnected
+; 0000 0076 ASSR=0x00;
+;PCODE: $00000040 VOL: 0
+;PCODE: $00000041 VOL: 0
+; 0000 0077 TCCR2=0x00;
+;PCODE: $00000042 VOL: 0
+;PCODE: $00000043 VOL: 0
+; 0000 0078 TCNT2=0x00;
+;PCODE: $00000044 VOL: 0
+;PCODE: $00000045 VOL: 0
+; 0000 0079 OCR2=0x00;
+;PCODE: $00000046 VOL: 0
+;PCODE: $00000047 VOL: 0
+; 0000 007A 
+; 0000 007B // Timer/Counter 3 initialization
+; 0000 007C // Clock value: Timer3 Stopped
+; 0000 007D // Mode: Normal top=0xFFFF
+; 0000 007E // OC3A output: Discon.
+; 0000 007F // OC3B output: Discon.
+; 0000 0080 // Noise Canceler: Off
+; 0000 0081 // Input Capture on Falling Edge
+; 0000 0082 // Timer3 Overflow Interrupt: Off
+; 0000 0083 // Input Capture Interrupt: Off
+; 0000 0084 // Compare A Match Interrupt: Off
+; 0000 0085 // Compare B Match Interrupt: Off
+; 0000 0086 TCCR3A=0x00;
+;PCODE: $00000048 VOL: 0
+;PCODE: $00000049 VOL: 0
+; 0000 0087 TCCR3B=0x00;
+;PCODE: $0000004A VOL: 0
+;PCODE: $0000004B VOL: 0
+; 0000 0088 TCNT3H=0x00;
+;PCODE: $0000004C VOL: 0
+;PCODE: $0000004D VOL: 0
+; 0000 0089 TCNT3L=0x00;
+;PCODE: $0000004E VOL: 0
+;PCODE: $0000004F VOL: 0
+; 0000 008A ICR3H=0x00;
+;PCODE: $00000050 VOL: 0
+;PCODE: $00000051 VOL: 0
+; 0000 008B ICR3L=0x00;
+;PCODE: $00000052 VOL: 0
+;PCODE: $00000053 VOL: 0
+; 0000 008C OCR3AH=0x00;
+;PCODE: $00000054 VOL: 0
+;PCODE: $00000055 VOL: 0
+; 0000 008D OCR3AL=0x00;
+;PCODE: $00000056 VOL: 0
+;PCODE: $00000057 VOL: 0
+; 0000 008E OCR3BH=0x00;
+;PCODE: $00000058 VOL: 0
+;PCODE: $00000059 VOL: 0
+; 0000 008F OCR3BL=0x00;
+;PCODE: $0000005A VOL: 0
+;PCODE: $0000005B VOL: 0
+; 0000 0090 
+; 0000 0091 // External Interrupt(s) initialization
+; 0000 0092 // INT0: Off
+; 0000 0093 // INT1: Off
+; 0000 0094 // INT2: Off
+; 0000 0095 // Interrupt on any change on pins PCINT0-7: Off
+; 0000 0096 // Interrupt on any change on pins PCINT8-15: Off
+; 0000 0097 MCUCR=0x00;
+;PCODE: $0000005C VOL: 0
+;PCODE: $0000005D VOL: 0
+; 0000 0098 EMCUCR=0x00;
+;PCODE: $0000005E VOL: 0
+;PCODE: $0000005F VOL: 0
+; 0000 0099 
+; 0000 009A // Timer(s)/Counter(s) Interrupt(s) initialization
+; 0000 009B TIMSK=0x00;
+;PCODE: $00000060 VOL: 0
+;PCODE: $00000061 VOL: 0
+; 0000 009C 
+; 0000 009D ETIMSK=0x00;
+;PCODE: $00000062 VOL: 0
+;PCODE: $00000063 VOL: 0
+; 0000 009E 
+; 0000 009F // USART0 initialization
+; 0000 00A0 // Communication Parameters: 8 Data, 1 Stop, No Parity
+; 0000 00A1 // USART0 Receiver: On
+; 0000 00A2 // USART0 Transmitter: On
+; 0000 00A3 // USART0 Mode: Asynchronous
+; 0000 00A4 // USART0 Baud Rate: 115200
+; 0000 00A5 UCSR0A=0x00;
+;PCODE: $00000064 VOL: 0
+;PCODE: $00000065 VOL: 0
+; 0000 00A6 UCSR0B=0x18;
+;PCODE: $00000066 VOL: 0
+;PCODE: $00000067 VOL: 0
+; 0000 00A7 UCSR0C=0x86;
+;PCODE: $00000068 VOL: 0
+;PCODE: $00000069 VOL: 0
+; 0000 00A8 UBRR0H=0x00;
+;PCODE: $0000006A VOL: 0
+;PCODE: $0000006B VOL: 0
+; 0000 00A9 UBRR0L=0x03;
+;PCODE: $0000006C VOL: 0
+;PCODE: $0000006D VOL: 0
+; 0000 00AA 
+; 0000 00AB // USART1 initialization
+; 0000 00AC // Communication Parameters: 8 Data, 1 Stop, No Parity
+; 0000 00AD // USART1 Receiver: On
+; 0000 00AE // USART1 Transmitter: On
+; 0000 00AF // USART1 Mode: Asynchronous
+; 0000 00B0 // USART1 Baud Rate: 115200
+; 0000 00B1 UCSR1A=0x00;
+;PCODE: $0000006E VOL: 0
+;PCODE: $0000006F VOL: 0
+; 0000 00B2 UCSR1B=0x18;
+;PCODE: $00000070 VOL: 0
+;PCODE: $00000071 VOL: 0
+; 0000 00B3 UCSR1C=0x86;
+;PCODE: $00000072 VOL: 0
+;PCODE: $00000073 VOL: 0
+; 0000 00B4 UBRR1H=0x00;
+;PCODE: $00000074 VOL: 0
+;PCODE: $00000075 VOL: 0
+; 0000 00B5 UBRR1L=0x03;
+;PCODE: $00000076 VOL: 0
+;PCODE: $00000077 VOL: 0
+; 0000 00B6 
+; 0000 00B7 // Analog Comparator initialization
+; 0000 00B8 // Analog Comparator: Off
+; 0000 00B9 // Analog Comparator Input Capture by Timer/Counter 1: Off
+; 0000 00BA ACSR=0x80;
+;PCODE: $00000078 VOL: 0
+;PCODE: $00000079 VOL: 0
+; 0000 00BB 
+; 0000 00BC // SPI initialization
+; 0000 00BD // SPI disabled
+; 0000 00BE SPCR=0x00;
+;PCODE: $0000007A VOL: 0
+;PCODE: $0000007B VOL: 0
+; 0000 00BF // Alphanumeric LCD initialization
+; 0000 00C0 // Connections are specified in the
+; 0000 00C1 // Project|Configure|C Compiler|Libraries|Alphanumeric LCD menu:
+; 0000 00C2 // RS - PORTA Bit 0
+; 0000 00C3 // RD - PORTA Bit 1
+; 0000 00C4 // EN - PORTA Bit 2
+; 0000 00C5 // D4 - PORTA Bit 4
+; 0000 00C6 // D5 - PORTA Bit 5
+; 0000 00C7 // D6 - PORTA Bit 6
+; 0000 00C8 // D7 - PORTA Bit 7
+; 0000 00C9 // Characters/line: 16
+; 0000 00CA lcd_init(16);  //*/
+;PCODE: $0000007C VOL: 0
+;PCODE: $0000007D VOL: 0
+; 0000 00CB #asm ("sei")
+;PCODE: $0000007E VOL: 0
+	sei
+;PCODE: $0000007F VOL: 0
+; 0000 00CC }
+;PCODE: $00000080 VOL: 0
+;PCODE: $00000081 VOL: 0
+;
+;
+;#pragma used-
+;
+;#ifndef RXB8
+;#define RXB8 1
+;#endif
+;
+;#ifndef TXB8
+;#define TXB8 0
+;#endif
+;
+;#ifndef UPE
+;#define UPE 2
+;#endif
+;
+;#ifndef DOR
+;#define DOR 3
+;#endif
+;
+;#ifndef FE
+;#define FE 4
+;#endif
+;
+;#ifndef UDRE
+;#define UDRE 5
+;#endif
+;
+;#ifndef RXC
+;#define RXC 7
+;#endif
+;
+;#define FRAMING_ERROR (1<<FE)
+;#define PARITY_ERROR (1<<UPE)
+;#define DATA_OVERRUN (1<<DOR)
+;#define DATA_REGISTER_EMPTY (1<<UDRE)
+;#define RX_COMPLETE (1<<RXC)
+;// Get a character from the USART1 Receiver
+;#pragma used+
+;
+;char getchar1(void)
+; 0000 00F6 {
+;PCODE: $00000082 VOL: 0
+;PCODE: $00000083 VOL: 0
+; 0000 00F7 char status,data;
+; 0000 00F8 while (1)
+;PCODE: $00000084 VOL: 0
+;PCODE: $00000085 VOL: 0
+;	status -> R17
+;	data -> R16
+;PCODE: $00000086 VOL: 0
+; 0000 00F9       {
+; 0000 00FA       while (((status=UCSR1A) & RX_COMPLETE)==0);
+;PCODE: $00000087 VOL: 0
+;PCODE: $00000088 VOL: 0
+;PCODE: $00000089 VOL: 0
+;PCODE: $0000008A VOL: 0
+;PCODE: $0000008B VOL: 0
+;PCODE: $0000008C VOL: 0
+;PCODE: $0000008D VOL: 0
+; 0000 00FB       data=UDR1;
+;PCODE: $0000008E VOL: 0
+;PCODE: $0000008F VOL: 0
+; 0000 00FC //      lcd_clear();
+; 0000 00FD //      if (FRAMING_ERROR) lcd_putsf("FRAMING_ERROR") ;
+; 0000 00FE //      if (PARITY_ERROR) lcd_putsf("PARITY_ERROR") ;
+; 0000 00FF //      if (DATA_OVERRUN) lcd_putsf("DATA_OVERRUN") ;
+; 0000 0100 //
+; 0000 0101 //      delay_ms(400);
+; 0000 0102       if ((status )) //& (FRAMING_ERROR | PARITY_ERROR | DATA_OVERRUN))==0)
+;PCODE: $00000090 VOL: 0
+;PCODE: $00000091 VOL: 0
+; 0000 0103          return data;
+;PCODE: $00000092 VOL: 0
+;PCODE: $00000093 VOL: 0
+;PCODE: $00000094 VOL: 0
+; 0000 0104       }
+;PCODE: $00000095 VOL: 0
+;PCODE: $00000096 VOL: 0
+;PCODE: $00000097 VOL: 0
+; 0000 0105 }
+;PCODE: $00000098 VOL: 0
+;PCODE: $00000099 VOL: 0
+;PCODE: $0000009A VOL: 0
+;#pragma used-
+;
+;
+;// Write a character to the USART1 Transmitter
+;#pragma used+
+;void putchar1(char c)
+; 0000 010C {
+;PCODE: $0000009B VOL: 0
+;PCODE: $0000009C VOL: 0
+; 0000 010D while ((UCSR1A & DATA_REGISTER_EMPTY)==0);
+;PCODE: $0000009D VOL: 0
+;	c -> Y+0
+;PCODE: $0000009E VOL: 0
+;PCODE: $0000009F VOL: 0
+;PCODE: $000000A0 VOL: 0
+;PCODE: $000000A1 VOL: 0
+;PCODE: $000000A2 VOL: 0
+;PCODE: $000000A3 VOL: 0
+; 0000 010E UDR1=c;
+;PCODE: $000000A4 VOL: 0
+;PCODE: $000000A5 VOL: 0
+; 0000 010F }
+;PCODE: $000000A6 VOL: 0
+;PCODE: $000000A7 VOL: 0
+;PCODE: $000000A8 VOL: 0
+;
+;/**
+;Send reset signal to GPS chip
+;*/
+;void reset_gps(){
+; 0000 0114 void reset_gps(){
+;PCODE: $000000A9 VOL: 0
+;PCODE: $000000AA VOL: 0
+; 0000 0115 	uint8_t UCSR1B_store = UCSR1B;//Save state of UCSR1B
+; 0000 0116 	while( !( UCSR1A & (1<<UDRE1)) ){};//Wait for empty USART1 transmit buffer
+;PCODE: $000000AB VOL: 0
+;	UCSR1B_store -> R17
+;PCODE: $000000AC VOL: 0
+;PCODE: $000000AD VOL: 0
+;PCODE: $000000AE VOL: 0
+;PCODE: $000000AF VOL: 0
+;PCODE: $000000B0 VOL: 0
+;PCODE: $000000B1 VOL: 0
+;PCODE: $000000B2 VOL: 0
+;PCODE: $000000B3 VOL: 0
+; 0000 0117 	UCSR1B &= ~(0x98);//Disable USART1 transmitter and receiver and interruption
+;PCODE: $000000B4 VOL: 0
+;PCODE: $000000B5 VOL: 0
+;PCODE: $000000B6 VOL: 0
+; 0000 0118 
+; 0000 0119 	DDRB = 0x9;// PB3 and PB0 set as out;
+;PCODE: $000000B7 VOL: 0
+;PCODE: $000000B8 VOL: 0
+; 0000 011A 	PORTB = 0x1;//Set HIGH level on /reset pin (PB0)
+;PCODE: $000000B9 VOL: 0
+;PCODE: $000000BA VOL: 0
+; 0000 011B 	//TX1 pin is in Z state
+; 0000 011C 	delay_ms(1);
+;PCODE: $000000BB VOL: 0
+;PCODE: $000000BC VOL: 0
+;PCODE: $000000BD VOL: 0
+; 0000 011D 
+; 0000 011E 	PORTB = 0;//Set LOW level on /reset pin (PB0) for 15ms
+;PCODE: $000000BE VOL: 0
+;PCODE: $000000BF VOL: 0
+; 0000 011F 	delay_ms(15);
+;PCODE: $000000C0 VOL: 0
+;PCODE: $000000C1 VOL: 0
+;PCODE: $000000C2 VOL: 0
+; 0000 0120 
+; 0000 0121 	PORTB = 0x1;//Set HIGH level on /reset pin (PB0)
+;PCODE: $000000C3 VOL: 0
+;PCODE: $000000C4 VOL: 0
+; 0000 0122 	delay_ms(25);//Wait gps chip reset and set up to work mode
+;PCODE: $000000C5 VOL: 0
+;PCODE: $000000C6 VOL: 0
+;PCODE: $000000C7 VOL: 0
+; 0000 0123 
+; 0000 0124 	UCSR1B = UCSR1B_store;//Restore state of UCSR1B
+;PCODE: $000000C8 VOL: 0
+;PCODE: $000000C9 VOL: 0
+; 0000 0125 }
+;PCODE: $000000CA VOL: 0
+;PCODE: $000000CB VOL: 0
+;PCODE: $000000CC VOL: 0
+;
+;/**
+;Send emergency reset signal to GSM chip
+;*/
+;void e_reset_gsm(){
+; 0000 012A void e_reset_gsm(){
+;PCODE: $000000CD VOL: 0
+;PCODE: $000000CE VOL: 0
+; 0000 012B 	uint8_t UCSR0B_store = UCSR0B;//Save state of UCSR0B
+; 0000 012C 	while( !( UCSR0A & (1<<UDRE0)) ){};//Wait for empty USART1 transmit buffer
+;PCODE: $000000CF VOL: 0
+;	UCSR0B_store -> R17
+;PCODE: $000000D0 VOL: 0
+;PCODE: $000000D1 VOL: 0
+;PCODE: $000000D2 VOL: 0
+;PCODE: $000000D3 VOL: 0
+;PCODE: $000000D4 VOL: 0
+;PCODE: $000000D5 VOL: 0
+;PCODE: $000000D6 VOL: 0
+;PCODE: $000000D7 VOL: 0
+; 0000 012D 	UCSR0B &= ~(0x18);//Disable USART1 transmitter and receiver
+;PCODE: $000000D8 VOL: 0
+;PCODE: $000000D9 VOL: 0
+;PCODE: $000000DA VOL: 0
+; 0000 012E 
+; 0000 012F 	DDRD = 0x16;// PD1 and PD2 and PD3 are out (TX, RTS, DTR)
+;PCODE: $000000DB VOL: 0
+;PCODE: $000000DC VOL: 0
+; 0000 0130 	DDRE = 0x3;//PE0 and PE1 are out (Reset_gsm, IGN)
+;PCODE: $000000DD VOL: 0
+;PCODE: $000000DE VOL: 0
+; 0000 0131 	delay_ms(1);
+;PCODE: $000000DF VOL: 0
+;PCODE: $000000E0 VOL: 0
+;PCODE: $000000E1 VOL: 0
+; 0000 0132 
+; 0000 0133 	PORTE |= 0x2; //Set '1' on Reset_gsm pin
+;PCODE: $000000E2 VOL: 0
+;PCODE: $000000E3 VOL: 0
+; 0000 0134 	delay_ms(15);
+;PCODE: $000000E4 VOL: 0
+;PCODE: $000000E5 VOL: 0
+;PCODE: $000000E6 VOL: 0
+; 0000 0135 
+; 0000 0136 	PORTE &= ~0x2;//Set Reset_gsm pin back to '0'
+;PCODE: $000000E7 VOL: 0
+;PCODE: $000000E8 VOL: 0
+; 0000 0137 	delay_ms(500);//Wait 0.5s for GSM module set up
+;PCODE: $000000E9 VOL: 0
+;PCODE: $000000EA VOL: 0
+; 0000 0138 
+; 0000 0139 	UCSR0B = UCSR0B_store;//Restore state of UCSR0B
+;PCODE: $000000EB VOL: 0
+;PCODE: $000000EC VOL: 0
+; 0000 013A }
+;PCODE: $000000ED VOL: 0
+;PCODE: $000000EE VOL: 0
+;PCODE: $000000EF VOL: 0
+;
+;/**
+;Send ignition signal to GSM chip
+;Block execution for 8 sec!
+;*/
+;void gsm_on(){
+; 0000 0140 void gsm_on(){
+;PCODE: $000000F0 VOL: 0
+;PCODE: $000000F1 VOL: 0
+; 0000 0141 	PORTE |= 0x1;//Set PE0 to '1' for 10ms
+;PCODE: $000000F2 VOL: 0
+;PCODE: $000000F3 VOL: 0
+; 0000 0142 	delay_ms(100);
+;PCODE: $000000F4 VOL: 0
+;PCODE: $000000F5 VOL: 0
+;PCODE: $000000F6 VOL: 0
+; 0000 0143 	PORTE &= ~0x1;//Set PE0 back to '0'
+;PCODE: $000000F7 VOL: 0
+;PCODE: $000000F8 VOL: 0
+; 0000 0144 	delay_ms(80);
+;PCODE: $000000F9 VOL: 0
+;PCODE: $000000FA VOL: 0
+;PCODE: $000000FB VOL: 0
+; 0000 0145 }
+;PCODE: $000000FC VOL: 0
+;PCODE: $000000FD VOL: 0
+;
+;//===================================
+;//GSM chip processing
+;//===================================
+;
+;/**
+;Set all settings to necessary in GSM chip
+;*/
+;uint8_t set_settings_gsm(){
+; 0000 014E uint8_t set_settings_gsm(){
+;PCODE: $000000FE VOL: 0
+;PCODE: $000000FF VOL: 0
+; 0000 014F //	uint8_t i = 0;
+; 0000 0150 //	ClearRxBuf();
+; 0000 0151 //
+; 0000 0152 //	sei();//Enable interruptions. Need for correct working of UART0(GSM) receiver
+; 0000 0153 //
+; 0000 0154 //	ClearRxBuf();
+; 0000 0155 //	while( (compare_st(RX_buf, "OK", 2) == false) || (i < TRY) ){
+; 0000 0156 //		ClearRxBuf();
+; 0000 0157 //		Send_AT_cmd("AT+IPR=115200\n\r", 1);//Setup fixed UART speed in gsm
+; 0000 0158 //		i++;
+; 0000 0159 //	}
+; 0000 015A //
+; 0000 015B //	ClearRxBuf();
+; 0000 015C //	while( (compare_st(RX_buf, "OK", 2) == false) || (i < TRY * 2) ){
+; 0000 015D //		ClearRxBuf();
+; 0000 015E //		Send_AT_cmd("ATE0\n\r", 1);//Disable echo mode
+; 0000 015F //		i++;
+; 0000 0160 //	}
+; 0000 0161 //
+; 0000 0162 //	ClearRxBuf();
+; 0000 0163 //	while( (compare_st(RX_buf, "OK", 2) == false) || (i < TRY * 3) ){
+; 0000 0164 //		ClearRxBuf();
+; 0000 0165 //		Send_AT_cmd("AT+CLCK=", 0);//Disable PIN code blocking. <AT+CLCK="SC",0,"PIN">
+; 0000 0166 //		Send_AT_cmd(quote, 0);
+; 0000 0167 //		Send_AT_cmd("SC", 0);
+; 0000 0168 //		Send_AT_cmd(quote, 0);
+; 0000 0169 //		Send_AT_cmd(",0,", 0);
+; 0000 016A //		Send_AT_cmd(quote, 0);
+; 0000 016B //		Send_AT_cmd(PIN, 0);
+; 0000 016C //		Send_AT_cmd(quote, 0);
+; 0000 016D //		Send_AT_cmd("\n\r", 1);
+; 0000 016E //		i++;
+; 0000 016F //	}
+; 0000 0170 //
+; 0000 0171 //	ClearRxBuf();
+; 0000 0172 //	while( (compare_st(RX_buf, "OK", 2) == false) || (i < TRY * 4) ){
+; 0000 0173 //		ClearRxBuf();
+; 0000 0174 //		Send_AT_cmd("AT\\Q3\n\r", 1);//Enable hardware data flow control
+; 0000 0175 //		i++;
+; 0000 0176 //	}
+; 0000 0177 //
+; 0000 0178 //	ClearRxBuf();
+; 0000 0179 //	while( (compare_st(RX_buf, "OK", 2) == false) || (i < TRY * 5) ){
+; 0000 017A //		ClearRxBuf();
+; 0000 017B //		Send_AT_cmd("AT+CMGF=1\n\r", 1);//Set text mode for sms sending
+; 0000 017C //		i++;
+; 0000 017D //	}
+; 0000 017E //
+; 0000 017F //
+; 0000 0180 //	//ClearRxBuf();
+; 0000 0181 //	//while( (compare_st(RX_buf, "OK", 2) == false) || (i < TRY * 5) ){
+; 0000 0182 //	//	ClearRxBuf();
+; 0000 0183 //	//	Send_AT_cmd("AT^SSET=1\n\r", 1);//Enable URC <^SSIM READY>
+; 0000 0184 //	//	i++;
+; 0000 0185 //	//}
+; 0000 0186 //
+; 0000 0187 //	if(i == TRY * 5)
+; 0000 0188 //		return -1;//All settings wasn't set successfully
+; 0000 0189 //	else
+; 0000 018A 		return 0;//All settings was set successfully
+;PCODE: $00000100 VOL: 0
+;PCODE: $00000101 VOL: 0
+; 0000 018B }
+;PCODE: $00000102 VOL: 0
+;
+;bool Gsm_Ready(){
+; 0000 018D _Bool Gsm_Ready(){
+;PCODE: $00000103 VOL: 0
+;PCODE: $00000104 VOL: 0
+; 0000 018E 	if(PIND & 0x28)//CTS(clear to send) DSR(always '1' by default)
+;PCODE: $00000105 VOL: 0
+;PCODE: $00000106 VOL: 0
+;PCODE: $00000107 VOL: 0
+; 0000 018F 		return true;
+;PCODE: $00000108 VOL: 0
+;PCODE: $00000109 VOL: 0
+; 0000 0190 	else
+;PCODE: $0000010A VOL: 0
+; 0000 0191 		return false;
+;PCODE: $0000010B VOL: 0
+;PCODE: $0000010C VOL: 0
+; 0000 0192 }
+;PCODE: $0000010D VOL: 0
+;PCODE: $0000010E VOL: 0
+;PCODE: $0000010F VOL: 0
+;
+;
+;//===================================
+;//MAIN function
+;//===================================
+;
+;void main(void){
+; 0000 0199 void main(void){
+;PCODE: $00000110 VOL: 0
+; 0000 019A 	    int i, j;
+; 0000 019B         char set[21] = "$PSTMSETPAR,1102,8*\n";
+; 0000 019C         char save[14] = "$PSTMSAVEPAR\n";
+; 0000 019D 
+; 0000 019E 
+; 0000 019F 	#asm ("cli")
+;PCODE: $00000111 VOL: 0
+;PCODE: $00000112 VOL: 0
+;PCODE: $00000113 VOL: 0
+;PCODE: $00000114 VOL: 0
+;PCODE: $00000115 VOL: 0
+;	i -> R16,R17
+;	j -> R18,R19
+;	set -> Y+14
+;	save -> Y+0
+;PCODE: $00000116 VOL: 0
+	cli
+;PCODE: $00000117 VOL: 0
+; 0000 01A0 	initialization();
+;PCODE: $00000118 VOL: 0
+; 0000 01A1 
+; 0000 01A2 	reset_gps();
+;PCODE: $00000119 VOL: 0
+; 0000 01A3 
+; 0000 01A4 	//gsm_on();
+; 0000 01A5 
+; 0000 01A6 	//set_settings_gsm();
+; 0000 01A7 
+; 0000 01A8     lcd_clear();
+;PCODE: $0000011A VOL: 0
+; 0000 01A9 	lcd_putsf("Hello_World!!\n123456789.");
+;PCODE: $0000011B VOL: 0
+;PCODE: $0000011C VOL: 0
+;PCODE: $0000011D VOL: 0
+; 0000 01AA 	delay_ms(2000);
+;PCODE: $0000011E VOL: 0
+;PCODE: $0000011F VOL: 0
+; 0000 01AB     lcd_clear();
+;PCODE: $00000120 VOL: 0
+; 0000 01AC //	reset_gps();
+; 0000 01AD     //get_gps_data();
+; 0000 01AE //    i=0;
+; 0000 01AF //    for (i = 0; i < 21; i++) {
+; 0000 01B0 //        putchar1(set[i]);
+; 0000 01B1 //        delay_ms(1);
+; 0000 01B2 //    }
+; 0000 01B3 //    for (i = 0; save[i] != '\n'; i++) {
+; 0000 01B4 //        putchar1(save[i]);
+; 0000 01B5 //        delay_ms(1);
+; 0000 01B6 //    }
+; 0000 01B7 	while(1){
+;PCODE: $00000121 VOL: 0
+; 0000 01B8         for (i = 0; i < 32; i++)
+;PCODE: $00000122 VOL: 0
+;PCODE: $00000123 VOL: 0
+;PCODE: $00000124 VOL: 0
+;PCODE: $00000125 VOL: 0
+;PCODE: $00000126 VOL: 0
+;PCODE: $00000127 VOL: 0
+;PCODE: $00000128 VOL: 0
+;PCODE: $00000129 VOL: 0
+;PCODE: $0000012A VOL: 0
+; 0000 01B9         {
+; 0000 01BA             buffer[i] = getchar1();
+;PCODE: $0000012B VOL: 0
+;PCODE: $0000012C VOL: 0
+;PCODE: $0000012D VOL: 0
+;PCODE: $0000012E VOL: 0
+;PCODE: $0000012F VOL: 0
+;PCODE: $00000130 VOL: 0
+; 0000 01BB             lcd_putchar(buffer[i]);
+;PCODE: $00000131 VOL: 0
+;PCODE: $00000132 VOL: 0
+;PCODE: $00000133 VOL: 0
+;PCODE: $00000134 VOL: 0
+; 0000 01BC 
+; 0000 01BD         }
+;PCODE: $00000135 VOL: 0
+;PCODE: $00000136 VOL: 0
+;PCODE: $00000137 VOL: 0
+;PCODE: $00000138 VOL: 0
+;PCODE: $00000139 VOL: 0
+; 0000 01BE         delay_ms(1000);
+;PCODE: $0000013A VOL: 0
+;PCODE: $0000013B VOL: 0
+; 0000 01BF         lcd_clear();
+;PCODE: $0000013C VOL: 0
+; 0000 01C0 
+; 0000 01C1 	}
+;PCODE: $0000013D VOL: 0
+;PCODE: $0000013E VOL: 0
+; 0000 01C2 }
+;PCODE: $0000013F VOL: 0
+;PCODE: $00000140 VOL: 0
+;PCODE: $00000141 VOL: 0
+;PCODE: $00000142 VOL: 0
+;PCODE: $00000143 VOL: 0

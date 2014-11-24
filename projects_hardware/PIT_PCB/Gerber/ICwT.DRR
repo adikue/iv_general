@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+NCDrill File Report For: ICwT.PcbDoc   24.02.2014  12:29:27
+---------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : ICwT.TXT
+
+Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        0.3mm (11.811mil)        Round          433              1938.02 mm (76.30 Inch)
+T2        0.5mm (19.685mil)        Round          10               109.28 mm (4.30 Inch)
+T3        0.7mm (27.559mil)        Round          24               122.73 mm (4.83 Inch)
+T4        0.762mm (30mil)          Round          2                3.50 mm (0.14 Inch)
+T5        0.9mm (35.433mil)        Round          40               249.57 mm (9.83 Inch)
+T6        0.92mm (36.221mil)       Round          4                7.00 mm (0.28 Inch)
+T7        1.09mm (42.913mil)       Round          36               301.55 mm (11.87 Inch)
+T8        2.3mm (90.551mil)        Round          2                12.04 mm (0.47 Inch)
+T9        2.6mm (102.362mil)       Round          4                305.00 mm (12.01 Inch)
+T10       3.26mm (128.346mil)      Round          8                248.36 mm (9.78 Inch)
+---------------------------------------------------------------------------
+Totals                                            563              3297.05 mm (129.81 Inch)
+
+Total Processing Time (hh:mm:ss) : 00:00:01

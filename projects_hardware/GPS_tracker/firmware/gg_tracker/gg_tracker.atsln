@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "gg_tracker", "gg_tracker\gg_tracker.cproj", "{00532118-CCE6-4D66-9BC8-4EAE44EFBF21}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{00532118-CCE6-4D66-9BC8-4EAE44EFBF21}.Debug|AVR.ActiveCfg = Debug|AVR
+		{00532118-CCE6-4D66-9BC8-4EAE44EFBF21}.Debug|AVR.Build.0 = Debug|AVR
+		{00532118-CCE6-4D66-9BC8-4EAE44EFBF21}.Release|AVR.ActiveCfg = Release|AVR
+		{00532118-CCE6-4D66-9BC8-4EAE44EFBF21}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

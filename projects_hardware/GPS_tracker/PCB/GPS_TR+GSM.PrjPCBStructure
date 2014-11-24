@@ -1,0 +1,5 @@
+Record=SheetSymbol|SourceDocument=GLOBAL.SchDoc|Designator=U_ATMEGA162|SchDesignator=U_ATMEGA162|FileName=ATMEGA162.SchDoc|SymbolType=Normal|RawFileName=ATMEGA162.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=GLOBAL.SchDoc|Designator=U_GPS - ML8088s|SchDesignator=U_GPS - ML8088s|FileName=GPS - ML8088s.SchDoc|SymbolType=Normal|RawFileName=GPS - ML8088s.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=GLOBAL.SchDoc|Designator=U_GSM - BGS2|SchDesignator=U_GSM - BGS2|FileName=GSM - BGS2.SchDoc|SymbolType=Normal|RawFileName=GSM - BGS2.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=GLOBAL.SchDoc|Designator=U_LDO|SchDesignator=U_LDO|FileName=LDO.SchDoc|SymbolType=Normal|RawFileName=LDO.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=TopLevelDocument|FileName=GLOBAL.SchDoc

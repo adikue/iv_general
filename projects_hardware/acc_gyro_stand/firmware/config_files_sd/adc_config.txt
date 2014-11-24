@@ -1,0 +1,160 @@
+*********************************SETTING FOR ADC CONVERTER ADS1258***********************************************
+* README:
+* This file CANNOT contain empty lines.
+* Setting NAME and value are separated with space symbol ' '
+* Value can be only one of valid
+* Comments starts with asteriks symbol '*'
+* String length in this file should not exceed 256 symbols
+*
+* 
+* SPI_RESET_TIMER
+* This bit sets the number of fCLK cycles in which SCLK is inactive the SPI interface will reset. This
+* places a lower limit on the frequency of SCLK in which to read or write data to the device. The SPI
+* interface only is reset and not the device itself. When the SPI interface is reset, it is ready for a new
+* command.
+* Values:
+* 4096 = Reset when SCLK inactive for 4096fCLK cycles (256µs, fCLK = 16MHz) (default).
+* 256 = Reset when SCLK inactive for 256fCLK cycles (16µs, fCLK = 16MHz).
+*
+SPI_RESET_TIMER 256
+*
+* SCAN_MODE
+* This bit sets either the Auto-Scan or Fixed-Channel mode of operation.
+* In Auto-Scan mode, the input channel selections are eight differential channels (DIFF0–DIFF7) and 16
+* single-ended channels (AIN0–AIN15). Additionally, five internal monitor readings can be selected.
+* These selections are made in SCAN_DIFF_CHANNELS, SCAN_SE_CHANNELS, and SCAN_SYSTEM. In this mode,
+* settings FIXED_CHANNEL_N_IN and FIXED_CHANNEL_P_IN have no effect. See the Auto-Scan Mode section in ADS1258 
+* datasheet for more details.
+*
+* In Fixed-Channel mode, any of the analog input channels may be selected for the positive
+* measurement and the negative measurement channels. The inputs are selected in FIXED_CHANNEL_N_IN and 
+* FIXED_CHANNEL_P_IN. In this mode, settings SCAN_DIFF_CHANNELS, SCAN_SE_CHANNELS, and SCAN_SYSTEM have no 
+* effect. Note that it is not possible to select the internal monitor readings in this mode.
+* Values:
+* SCAN = Auto-Scan Mode (default)
+* FIXED = Fixed-Channel Mode
+*
+SCAN_MODE SCAN
+*
+* MULTIPLEXER
+* This bit selects either the internal or external connection from the multiplexer output to the ADC input.
+* Note that the Temperature, VCC, Gain, and Reference internal monitor readings automatically use the
+* internal connection, regardless of this setting. The Offset reading uses this setting.
+* Values:
+* INT = ADC inputs use internal multiplexer connection (default).
+* EXT = ADC inputs use external ADC inputs (ADCINP and ADCINN).
+*
+MULTIPLEXER INT
+*
+* CLK_OUT
+* This bit enables the clock output on pin CLKIO. The clock output originates from the device crystal
+* oscillator and PLL circuit.
+* Note: If the CLKSEL pin is set to '1', the CLKIO pin is a clock input only. In this case, setting this bit
+* has no effect.
+* Values:
+* DISABLE = Clock output on CLKIO disabled.
+* ENABLE = Clock output on CLKIO enabled (default).
+*
+CLK_OUT ENABLE
+*
+* CHOPPING
+* This setting enables the chopping feature on the external multiplexer loop.
+* The chopping feature corrects for offset originating from components used in the external multiplexer
+* loop; see the External Chopping section in ADS1258 datasheet.
+* Note that for Internal System readings (Temperature, VCC, Gain, and Reference), the CHOP bit must
+* be 0.
+* Values:
+* DISABLE = Chopping Disabled (default)
+* ENABLE = Chopping Enabled
+*
+CHOPPING DISABLE
+*
+* STATUS_BYTE
+* When reading channel data from the ADS1258, a status byte is normally included with the conversion
+* data. However, in some ADS1258 operating modes, the status byte can be disabled. Table 17, Status
+* Byte, shows the modes of operation and the data read formats in which the status byte can be
+* disabled.
+* Values:
+* DISABLE = Status Byte Disabled
+* ENABLE = Status Byte Enabled (default)
+* Note:
+* |MODE 			|CHANNEL DATA READ COMMAND 			|CHANNEL DATA READ DIRECT
+* |Auto-Scan 		|Always Enabled 					|Enabled/Disabled by STAT Bit
+* |Fixed-Channel 	|Always Enabled (Byte is Undefined) |Always Disabled
+*
+STATUS_BYTE ENABLE
+*
+* IDLE_MODE
+* This bit selects the Idle mode when the device is not converting, Standby or Sleep. The Sleep mode
+* offers lower power consumption but has a longer wake-up time to re-enter the run mode; see the Idle
+* Modes section.
+* Values:
+* STANBY = Select Standby Mode
+* SLEEP = Select Sleep Mode (default)
+*
+IDLE_MODE SLEEP
+*
+* SWITCH_DELAY
+* This set the amount of time the converter will delay after indexing to a new channel but before
+* starting a new conversion. This value should be set large enough to allow for the full settling of
+* external filtering or buffering circuits used between the MUXOUTP, MUXOUTN, and ADCINP,
+* ADCINN pins; see the Switch Time Delay section in ADS1258 datasheet. (default = 000)
+*
+SWITCH_DELAY 000
+*
+* SENSOR_BIAS
+* This set the sensor bias current source.
+* Values:
+* OFF = Sensor Bias Current Source Off (default)
+* 15 = 1.5µA Source
+* 24 = 24µA Source
+*
+SENSOR_BIAS OFF
+*
+* DATA_RATE
+* This set the data rate of the converter. Slower reading rates yield increased resolution; see
+* table below. The actual data rates shown in the table can be slower, depending on the use of Switch Time
+* Delay or the Chop feature. See the Switch Time Delay section in ADS1258 datasheet. The reading rate scales 
+* with the master clock frequency.
+* Note:		 
+* |DATA_RATE Value 	|AUTO-SCAN MODE(SPS)	|FIXED-CHANNEL MODE(SPS)
+* |11 (default)		|23739 					|125000
+* |10 				|15123 					|31250
+* |01 				|6168  					|7813
+* |00 				|1831  					|1953
+*
+DATA_RATE 11
+*
+* FIXED_CHANNEL_P_IN FIXED_CHANNEL_N_IN
+* This selects the input channels of the multiplexer to be used for the Fixed-Channel mode. In this mode, bits 
+* FIXED_CHANNEL_N_IN select the analog input channel for the negative ADC input, and bits FIXED_CHANNEL_P_IN 
+* select the analog input channel for the positive ADC input. See the Fixed-Channel Mode section in ADS1258 datasheet.
+*
+FIXED_CHANNEL_P_IN 0
+FIXED_CHANNEL_N_IN 15
+*
+* SCAN_DIFF_CHANNELS SCAN_SE_CHANNELS SCAN_SYSTEM
+* These three settings select the input channels and the internal readings for measurement in Auto-Scan mode.
+* For differential channel selections (DIFF0…DIFF7), adjacent input pins (AIN0/AIN1, AIN2/AIN3, etc.) are pre-set
+* as differential inputs. All single-ended inputs are measured with respect to the AINCOM input. AINCOM may be
+* set to any level within ±100mV of the analog supply range. Channels not selected are skipped in the
+* measurement sequence.
+* Values (Bit mask fopr channels. For 0 and 1 channel correct value will be 0x3. Values strictly are in HEX):
+* SCAN_DIFF_CHANNELS: 	0x00..0xFF (default 0x00)
+* |7 	 |6 	|5 	   |4 	  |3 	 |2 	|1 	   |0
+* |DIFF7 |DIFF6 |DIFF5 |DIFF4 |DIFF3 |DIFF2 |DIFF1 |DIFF0
+*
+* SCAN_SE_CHANNELS: 	0x0000 or 0xFFFF (default 0xFFFF)
+* |15 	 |14 	|13    |12 	  |11 	 |10 	|9 	   |8 	  |7 	 |6 	|5 	   |4 	  |3 	 |2 	|1 	   |0
+* |AIN15 |AIN14 |AIN13 |AIN12 |AIN11 |AIN10 |AIN9  |AIN8  |AIN7  |AIN6  |AIN5  |AIN4  |AIN3  |AIN2  |AIN1  |AIN0
+*
+* SCAN_SYSTEM:	0x00..0x3D (default 0x00)
+* |7 	|6 	|5 	 |4    |3 	 |2   	|1 	|0
+* |0 	|0 	|REF |GAIN |TEMP |VCC 	|0 	|OFFSET
+*
+SCAN_DIFF_CHANNELS 0x00
+*
+SCAN_SE_CHANNELS 0xFFFF
+*
+SCAN_SYSTEM 0x00
+*

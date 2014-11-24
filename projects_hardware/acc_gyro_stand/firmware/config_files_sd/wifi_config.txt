@@ -1,0 +1,5 @@
+AT+S.SCFG=wifi_mode,3
+AT+S.SCFG=wifi_priv_mode,0
+at+s.ssidtxt=STAND_WIFI
+at&w
+at+cfun=1

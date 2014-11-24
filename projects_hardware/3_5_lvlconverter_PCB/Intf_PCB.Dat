@@ -1,0 +1,11 @@
+Field=Comment~String~Comment~100|Field=Description~String~Description~100|Field=Designator~String~Designator~100|Field=Footprint~String~Footprint~100|Field=LibRef~String~LibRef~100|Field=Quantity~Integer~Quantity~100|ReportField=Currency~<none>|ReportField=ProductionQuantity~1|ReportField=ProjectFileName~Intf_PCB.PrjPcb|ReportField=ProjectFullPath~D:\docs\projects\hard\icooler\interface_SCH.PCB\Intf_PCB.PrjPcb|ReportField=Title~Bill of Materials For Project [Intf_PCB.PrjPcb] (No PCB Document Selected)|ReportField=TotalQuantity~17|ReportField=ReportTime~18:34:48|ReportField=ReportDate~14 May 2014|ReportField=ReportDateTime~14 May 2014 18:34:48|ReportField=OutputName~Bill of Materials|ReportField=OutputType~BOM_PartType|ReportField=GeneratorName~BOM|ReportField=GeneratorDescription~Bill of Materials|ReportField=VariantName~None|ReportField=Address1~|ReportField=Address2~|ReportField=Address3~|ReportField=Address4~|ReportField=ApprovedBy~|ReportField=Author~|ReportField=CheckedBy~|ReportField=CompanyName~|ReportField=CurrentDate~14 May 2014|ReportField=CurrentTime~18:34:46|ReportField=Date~|ReportField=DocumentFullPathAndName~D:\docs\projects\hard\icooler\interface_SCH.PCB\Intf_PCB.SchDoc|ReportField=DocumentName~Intf_PCB.SchDoc|ReportField=DocumentNumber~|ReportField=DrawnBy~|ReportField=Engineer~|ReportField=ImagePath~|ReportField=ModifiedDate~14 May 2014|ReportField=Organization~|ReportField=ProjectName~Intf_PCB.PrjPcb|ReportField=Revision~|ReportField=Rule~|ReportField=SheetNumber~|ReportField=SheetTotal~|ReportField=Time~|ReportField=Title~|ReportField=DataSourceFileName~Intf_PCB.PrjPcb|ReportField=DataSourceFullPath~D:\docs\projects\hard\icooler\interface_SCH.PCB\Intf_PCB.PrjPcb|ReportField=PCBDataSourceFileName~Intf_PCB.PcbDoc|ReportField=PCBDataSourceFullPath~D:\docs\projects\hard\icooler\interface_SCH.PCB\Intf_PCB.PcbDoc
+10000uF|Capacitor|C1|CAP470X25V|C_10_12_5mm|1
+0.33uF|Capacitor|C2, C5|C_1206|C1206|2
+0.1uF|Capacitor|C3, C6|C_1206|C1206|2
+10uF|Capacitor|C4|CAP470X25V|C_10_12_5mm|1
+50k|Resistor|R1, R2|R_1206|R1206|2
+LM7805|3-Terminal Positive Voltage Regulators|U1|T03B|LM78M05CT|1
+LM1117DT-3.3|800mA Low-Dropout Linear Regulator|U2|TD03B_M|LM1117DT-3.3|1
+TXB0108||U3, U4|TSOP65P640X120-20N|TXB0108|2
+PWL-2|Header, 2-Pin|X1, X2, X3|15EDGVC|PWL-2|3
+PLS-15|Header, 15-Pin|X4, X5|PLS-15-3D|PLS-15|2

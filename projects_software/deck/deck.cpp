@@ -1,4 +1,5 @@
 #include <unordered_set>
+#include <vector>
 #include <random>
 #include <iostream>
 
@@ -276,6 +277,144 @@ std::ostream& operator<<(std::ostream& os, const Deck& deck)
 
     return os;
 }
+
+
+
+// class VectorDeck {
+// public:
+//     static const size_t kMaxCapacity = 52;
+//     friend std::ostream& operator<<(std::ostream& os, const VectorDeck& deck);
+
+//     VectorDeck(bool empty = false, size_t capacity = kMaxCapacity)
+//     {
+//         if (capacity > kMaxCapacity) {
+//             throw std::runtime_error("A VectorDeck can contain " + std::to_string(kMaxCapacity) + " cards maximum");
+//         }
+
+//         deck_.reserve(capacity);
+//         if (!empty) {
+//             for (const Card::Value& v : Card::AllValues) {
+//                 for (const Card::Suit& s : Card::AllSuits) {
+//                     PutCard(Card(v, s));
+//                 }
+//             }
+//         }
+//     }
+
+//     VectorDeck(const VectorDeck& other) = default;
+//     VectorDeck(VectorDeck&& other) = default;
+
+//     void Shuffle()
+//     {
+//         size_t halfway = Capacity() / 2;
+//         for (size_t i = 0; i <= halfway; ++i)
+//         {
+//             size_t first_pos = GetRandomPosition(0, halfway);
+//             size_t second_pos = GetRandomPosition(halfway, Capacity());
+//             std::swap(deck_[first_pos], deck_[second_pos]);
+//         }
+//     }
+
+//     Card PopCard()
+//     {
+//         if (Empty()) {
+//             throw std::runtime_error("The deck is empty");
+//         }
+
+//         Card some_card = deck_.back();
+//         deck_.pop_back();
+//         return some_card;
+//     }
+
+//     void PutCard(Card&& card, bool random = false)
+//     {
+//         if (Size() >= Capacity()) {
+//             throw std::runtime_error("The deck already contains " + std::to_string(Capacity()) + " cards");
+//         }
+
+//         if (!random) {
+//             return deck_.push_back(card);
+//         }
+
+//         deck_.insert(deck_.begin() + GetRandomPosition(), card);
+//     }
+
+//     VectorDeck Split(size_t at_pos = 0)
+//     {
+//         while (at_pos == 0) {
+//             at_pos = GetRandomPosition();
+//         }
+
+//         VectorDeck new_deck(true, Capacity());
+//         std::move(deck_.begin() + at_pos, deck_.end(), std::back_inserter(new_deck.deck_));
+//         deck_.erase(deck_.begin() + at_pos, deck_.end());
+//         return new_deck;
+//     }
+
+//     void Merge(VectorDeck&& from_deck)
+//     {
+//         if (Size() + from_deck.Size() > Capacity()) {
+//             throw std::runtime_error("Cumulative size of both deck exceeds " + std::to_string(Capacity()));
+//         }
+
+//         std::move(from_deck.deck_.begin(), from_deck.deck_.end(), std::back_inserter(deck_));
+//         from_deck.deck_.erase(from_deck.deck_.begin(), from_deck.deck_.end());
+//     }
+
+//     size_t Size() const
+//     {
+//         return deck_.size();
+//     }
+
+//     size_t Capacity() const
+//     {
+//         return deck_.capacity();
+//     }
+
+//     bool Empty() const
+//     {
+//         return Size() == 0;
+//     }
+
+//     bool operator==(const VectorDeck &other) const
+//     {
+//         if (Capacity() != other.Capacity() ||
+//             Size() != other.Size())
+//         {
+//             return false;
+//         }
+
+//         return deck_ == other.deck_;
+//     }
+
+//     VectorDeck& operator=(VectorDeck&& other)
+//     {
+//         std::swap(deck_, other.deck_);
+//         return *this;
+//     }
+
+//     VectorDeck& operator=(const VectorDeck& other)
+//     {
+//         deck_ = other.deck_;
+//         return *this;
+//     }
+
+// private:
+//     size_t GetRandomPosition(size_t from = 0, size_t to = 0)
+//     {
+//         if (to == 0) {
+//             to = Size();
+//         }
+//         std::uniform_int_distribution<size_t> even_random(from, to);
+//         std::random_device random_generator_;
+//         return even_random(random_generator_);
+//     }
+
+//     std::vector<Card> deck_;
+// };
+
+
+
 
 int main(){
     Deck card_deck;

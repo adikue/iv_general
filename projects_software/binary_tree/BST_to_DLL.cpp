@@ -25,7 +25,13 @@ DLLNode* NewDLLNode(int k)
     return new DLLNode{k, nullptr, nullptr};
 }
 
-DLLNode* ConvertBSTToDLL(BSTNode* bst)
+struct DLL
+{
+    DLLNode* start;
+    DLLNode* end;
+};
+
+DLL* ConvertBSTToDLL(BSTNode* bst)
 {
     if (!bst) {
         return nullptr;
@@ -33,25 +39,23 @@ DLLNode* ConvertBSTToDLL(BSTNode* bst)
 
     DLLNode* cur_node = NewDLLNode(bst->value);
 
-    DLLNode* prev_node = ConvertBSTToDLL(bst->left);
-    if (prev_node) {
-        while (prev_node->next) {
-            prev_node = prev_node->next;
-        }
-        prev_node->next = cur_node;
-        cur_node->prev = prev_node;
+    DLL* prev_list = ConvertBSTToDLL(bst->left);
+    if (prev_list) {
+        prev_list->end->next = cur_node;
+        cur_node->prev = prev_list->end;
+    } else {
+        prev_list = new DLL{cur_node, nullptr};
     }
 
-    DLLNode* next_node = ConvertBSTToDLL(bst->right);
-    if (next_node) {
-        next_node->prev = cur_node;
-        cur_node->next = next_node;
+    DLL* next_list = ConvertBSTToDLL(bst->right);
+    if (next_list) {
+        next_list->start->prev = cur_node;
+        cur_node->next = next_list->start;
+    } else {
+        next_list = new DLL{nullptr, cur_node};
     }
 
-    while (cur_node->prev) {
-        cur_node = cur_node->prev;
-    }
-    return cur_node;
+    return new DLL{prev_list->start, next_list->end};
 }
 
 
@@ -72,7 +76,7 @@ int main()
      //  /  \
      // 10  14
 
-    DLLNode* dll = ConvertBSTToDLL(bst);
+    DLLNode* dll = ConvertBSTToDLL(bst)->start;
 
     while (dll) {
         std::cout << dll->value;
